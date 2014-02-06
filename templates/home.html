@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="ui six items">
+
+    {% for image in images %}
+
+        <div class="item">
+            <a class="ui rounded image" href="#">
+                <img src="/images/{{ image }}">
+            </a>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+
+
+{% endblock %}

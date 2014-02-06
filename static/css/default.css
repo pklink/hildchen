@@ -1,0 +1,18 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:300);
+
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+.items .item {
+    min-height: 200px !important;
+    margin-bottom: 1em !important;
+}
+
+.items .small.item {
+    min-height: 150px !important;
+}
+
+#dropzone {
+    height: 500px;
+}
