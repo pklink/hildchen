@@ -2,20 +2,26 @@
 
 {% block content %}
 
-<div class="ui six items">
+    <div class="ui six items">
+        {% for image in images %}
 
-    {% for image in images %}
+            <div class="item">
+                <a class="ui rounded image show-image" href="/images/{{ image.0 }}" data-gallery>
+                    <img src="/images/{{ image.1 }}">
+                </a>
+            </div>
 
-        <div class="item">
-            <a class="ui rounded image" href="#">
-                <img src="/images/{{ image }}">
-            </a>
-        </div>
+        {% endfor %}
+    </div>
 
-    {% endfor %}
-
-</div>
-
-
+    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-fullscreen="true">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
 
 {% endblock %}

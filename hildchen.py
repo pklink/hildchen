@@ -8,9 +8,16 @@ app.secret_key = 'secret'
 
 @app.route('/')
 def main():
+    # get images
     images = []
+
     for image in glob('./uploads/*thumb*'):
-        images.append(path.basename(image))
+        thumbnail_name = path.basename(image)
+        image_name = thumbnail_name.replace('-thumb', '-large')
+        image_tupel = (image_name, thumbnail_name)
+        images.append(image_tupel)
+
+    # render template
     return render_template('home.html', images=images)
 
 @app.route('/images/<image>')
@@ -31,18 +38,36 @@ def upload():
     # path to save the original file
     original_path = upload_dir + uploaded_file.filename
 
-    # save file
+    # save original file
     uploaded_file.save(original_path)
+
+    # get name of file and extension
+    filename, extension = path.splitext(uploaded_file.filename)
 
     # copy file for creating a thumbnail
     image = Image.open(original_path, 'r').copy()
 
-    # get the value of the smallest side
-    smallest = 0
+    # get the value of the smallest and biggest side
+    smallest = biggest = 0
     if image.size[0] > image.size[1]:
+        biggest = image.size[0]
         smallest = image.size[1]
     else:
+        biggest = image.size[1]
         smallest = image.size[0]
+
+    # downscale
+
+    downscale_size = biggest
+    if downscale_size > 800:
+        downscale_size = 800
+
+    # save downscaled image
+    large_image = image.copy()
+    large_image.thumbnail((downscale_size, downscale_size))
+    large_image.save(upload_dir + filename + '-large' + extension)
+
+    # / downscale
 
     # check if smallest not smaller then 200
     if smallest <= 200:
@@ -66,9 +91,6 @@ def upload():
 
     # thumbnail file
     image.thumbnail((200, 200), Image.ANTIALIAS)
-
-    # get name of file and extension
-    filename, extension = path.splitext(uploaded_file.filename)
 
     # save thumbnail
     image.save(upload_dir + filename + '-thumb' + extension)
