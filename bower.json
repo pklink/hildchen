@@ -1,0 +1,21 @@
+{
+    "name": "hildchen",
+    "version": "0.1.0",
+    "authors": [
+        "Pierre Klink <dev@klinks.info>"
+    ],
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "Semantic-UI": "0.12.4",
+        "dropzone": "3.8.3",
+        "blueimp-gallery": "2.13.0"
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}
