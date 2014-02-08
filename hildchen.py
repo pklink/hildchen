@@ -22,7 +22,7 @@ def main():
 
 @app.route('/images/<image>')
 def show_image(image):
-    f = open(getcwd() + '/uploads/' + image, 'rb')
+    f = open('./uploads/' + image, 'rb')
     r = make_response(f.read())
     r.headers['Content-Type'] = 'image/jpeg'
     return r

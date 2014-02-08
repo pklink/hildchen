@@ -9,6 +9,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/semantic.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.blueimp-gallery.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/dropzone.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/upload.js') }}"></script>
 </head>
 <body>
 
@@ -39,38 +40,6 @@
             <div class="ui green button"><i class="checkmark icon"></i> Save</div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        $(function() {
-
-            // upload
-            $("#dropzone").dropzone({
-                url: '/upload',
-                acceptedFiles: '.jpg,.jpeg,.gif,.png,image/*',
-                previewsContainer: '.preview',
-                previewTemplate:
-                        '<div class="small item visible content">' +
-                            '<div class="ui active dimmer">' +
-                                '<div class="content">' +
-                                    '<div class="center">' +
-                                        '<div class="ui loader"></div>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                            '<div class="small image"><img data-dz-thumbnail />' +
-                        '</div>',
-                success: function(file) {
-                    $(file.previewElement).find('.dimmer').dimmer('hide');
-                }
-            });
-
-            // show upload modal
-            $('#do-upload').click(function() {
-                $('#modal-upload').modal('show');
-            });
-
-        });
-    </script>
 
 </body>
 </html>
