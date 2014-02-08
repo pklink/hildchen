@@ -4,6 +4,7 @@
 
 ```bash
 pip install Flask && npm install && bower install && grunt
+python hildchen.py
 ```
 
 ## License
