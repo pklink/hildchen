@@ -4,7 +4,7 @@
     "authors": [
         "Pierre Klink <dev@klinks.info>"
     ],
-    "license": "MIT",
+    "license": "BSD-3",
     "private": true,
     "dependencies": {
         "Semantic-UI": "0.12.4",
