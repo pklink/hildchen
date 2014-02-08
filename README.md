@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-npm install && bower install && grunt
+pip install Flask && npm install && bower install && grunt
 ```
 
 ## License
