@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, make_response
 from os import getcwd, path, remove
 from glob import glob
 from PIL import Image
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.debug = True
 app.secret_key = 'secret'
 
 
@@ -36,7 +38,7 @@ def upload():
     uploaded_file = request.files['file']
 
     # save file temporally
-    tmp_path = './tmp/' + uploaded_file.filename
+    tmp_path = './tmp/' + secure_filename(uploaded_file.filename)
     uploaded_file.save(tmp_path)
 
     # save image
