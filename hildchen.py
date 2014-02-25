@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response
-from os import getcwd, path
+from os import getcwd, path, remove
 from glob import glob
 from PIL import Image
 
@@ -45,22 +45,25 @@ def upload():
     image.create_large_version()
     image.create_thumbnail()
 
+    # remove temp-file
+    remove(tmp_path)
+
     return '1'
 
 
 class ImageFile:
 
-    def __init__(self, path_to_uploaded):
-        # prepare propertes
+    def __init__(self, path_to_uploaded_file):
+        # prepare properties
         self.smallest = 0
         self.largest = 0
         self.upload_dir = './uploads/'
 
         # create image instance of uploaded file
-        self.original_image = Image.open(path_to_uploaded)
+        self.original_image = Image.open(path_to_uploaded_file)
 
         # get name of file and extension
-        basename = path.basename(path_to_uploaded)
+        basename = path.basename(path_to_uploaded_file)
         self.filename, self.extension = path.splitext(basename)
 
     def calculate_smallest_and_largest_side(self):
@@ -125,8 +128,6 @@ class ImageFile:
 
     def save_original_image(self):
         self.original_image.save(self.upload_dir + self.filename + self.extension)
-
-
 
 
 if __name__ == '__main__':
