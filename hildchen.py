@@ -25,8 +25,8 @@ def main():
     return render_template('home.html', images=images)
 
 
-@app.route('/albums', methods=['GET'])
-def albums():
+@app.route('/galleries', methods=['GET'])
+def galleries():
     # create connections to database
     conn = sqlite3.connect('hildchen.db')
     curs = conn.cursor()
@@ -34,11 +34,11 @@ def albums():
     # get albums
     curs.execute('SELECT id, name FROM albums ORDER BY id DESC')
 
-    return render_template('albums.html', albums=curs)
+    return render_template('galleries.html', albums=curs)
 
 
-@app.route('/albums', methods=['POST'])
-def create_album():
+@app.route('/galleries', methods=['POST'])
+def create_gallery():
     # get form data
     name = request.form['name'].strip()
     visibility = request.form['visibility'].strip()
