@@ -31,10 +31,10 @@ def galleries():
     conn = sqlite3.connect('hildchen.db')
     curs = conn.cursor()
 
-    # get albums
-    curs.execute('SELECT id, name FROM albums ORDER BY id DESC')
+    # get galleries
+    curs.execute('SELECT id, name FROM galleries ORDER BY id DESC')
 
-    return render_template('galleries.html', albums=curs)
+    return render_template('galleries.html', galleries=curs)
 
 
 @app.route('/galleries', methods=['POST'])
@@ -56,7 +56,7 @@ def create_gallery():
     curs = conn.cursor()
 
     # write album in db
-    curs.execute('INSERT INTO albums (name, visibility) VALUES (?, ?)', (name, visibility))
+    curs.execute('INSERT INTO galleries (name, visibility) VALUES (?, ?)', (name, visibility))
     conn.commit()
 
     # close connection to db
