@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, make_response
+import sqlite3
+from flask import Flask, render_template, request, make_response, jsonify
 from os import getcwd, path, remove
 from glob import glob
 from PIL import Image
@@ -22,6 +23,46 @@ def main():
 
     # render template
     return render_template('home.html', images=images)
+
+
+@app.route('/albums', methods=['GET'])
+def albums():
+    # create connections to database
+    conn = sqlite3.connect('hildchen.db')
+    curs = conn.cursor()
+
+    # get albums
+    curs.execute('SELECT id, name FROM albums ORDER BY id DESC')
+
+    return render_template('albums.html', albums=curs)
+
+
+@app.route('/albums', methods=['POST'])
+def create_album():
+    # get form data
+    name = request.form['name'].strip()
+    visibility = request.form['visibility'].strip()
+
+    # check data from request
+    if len(name) == 0:
+        return jsonify(code=1, message='Name is required'), 400
+    elif len(visibility) == 0:
+        return jsonify(code=2, message='Visbility is required'), 400
+    elif visibility != 'private' and visibility != 'public':
+        return jsonify(code=3, message='Visibility has to `private` or `public`'), 400
+
+    # create connection to db an cursor
+    conn = sqlite3.connect('hildchen.db')
+    curs = conn.cursor()
+
+    # write album in db
+    curs.execute('INSERT INTO albums (name, visibility) VALUES (?, ?)', (name, visibility))
+    conn.commit()
+
+    # close connection to db
+    conn.close()
+
+    return jsonify(id=curs.lastrowid, name=name, visibility=visibility)
 
 
 @app.route('/images/<image>')

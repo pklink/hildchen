@@ -7,7 +7,7 @@
     "license": "BSD-3",
     "private": true,
     "dependencies": {
-        "Semantic-UI": "0.12.4",
+        "Semantic-UI": "0.13.0",
         "dropzone": "3.8.3",
         "blueimp-gallery": "2.13.0"
     },
