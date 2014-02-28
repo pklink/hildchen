@@ -1,5 +1,5 @@
-import sqlite3
-from flask import Flask, render_template, request, make_response, jsonify
+import sqlite3, json
+from flask import Flask, render_template, request, make_response, jsonify, json
 from os import getcwd, path, remove
 from glob import glob
 from PIL import Image
@@ -32,20 +32,45 @@ def galleries():
     curs = conn.cursor()
 
     # get galleries
-    curs.execute('SELECT id, name FROM galleries ORDER BY id DESC')
+    curs.execute('SELECT * FROM galleries ORDER BY id DESC')
 
-    return render_template('galleries.html', galleries=curs)
+    # save galleries
+    galleries = []
+    for gallery in curs.fetchall():
+        galleries.append({
+            'id': gallery[0],
+            'name': gallery[1],
+            'visibility': gallery[2]
+        })
+
+    return json.dumps(galleries), 200, {'Content-Type': 'text/json'}
+
+
+@app.route('/galleries/<id>', methods=['DELETE'])
+def delete_gallery(id):
+    # create connections to database
+    conn = sqlite3.connect('hildchen.db')
+    curs = conn.cursor()
+
+    # DELETE gallery
+    curs.execute('DELETE FROM galleries WHERE id = :id', {'id': id})
+    conn.commit()
+
+    # Close connection
+    conn.close()
+
+    return jsonify({'id': id}), 200, {'Content-Type': 'text/json'}
 
 
 @app.route('/galleries', methods=['POST'])
 def create_gallery():
     # get form data
-    name = request.form['name'].strip()
+    title = request.form['title'].strip()
     visibility = request.form['visibility'].strip()
 
     # check data from request
-    if len(name) == 0:
-        return jsonify(code=1, message='Name is required'), 400
+    if len(title) == 0:
+        return jsonify(code=1, message='Title is required'), 400
     elif len(visibility) == 0:
         return jsonify(code=2, message='Visbility is required'), 400
     elif visibility != 'private' and visibility != 'public':
@@ -56,13 +81,13 @@ def create_gallery():
     curs = conn.cursor()
 
     # write album in db
-    curs.execute('INSERT INTO galleries (name, visibility) VALUES (?, ?)', (name, visibility))
+    curs.execute('INSERT INTO galleries (name, visibility) VALUES (?, ?)', (title, visibility))
     conn.commit()
 
     # close connection to db
     conn.close()
 
-    return jsonify(id=curs.lastrowid, name=name, visibility=visibility)
+    return jsonify(id=curs.lastrowid, name=title, visibility=visibility)
 
 
 @app.route('/images/<image>')

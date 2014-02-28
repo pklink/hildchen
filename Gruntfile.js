@@ -79,7 +79,8 @@ module.exports = function (grunt) {
                             'Semantic-UI/build/packaged/javascript/semantic.min.js',
                             'jquery/jquery.min.js',
                             'dropzone/downloads/dropzone.min.js',
-                            'blueimp-gallery/js/jquery.blueimp-gallery.min.js'
+                            'blueimp-gallery/js/jquery.blueimp-gallery.min.js',
+                            'canjs/can.jquery.dev.js'
                         ],
                         dest: 'static/js/',
                         filter: 'isFile'

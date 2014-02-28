@@ -9,7 +9,8 @@
     "dependencies": {
         "Semantic-UI": "0.13.0",
         "dropzone": "3.8.3",
-        "blueimp-gallery": "2.13.0"
+        "blueimp-gallery": "2.13.0",
+        "canjs": "v2.0.5"
     },
     "ignore": [
         "**/.*",
