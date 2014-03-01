@@ -69,5 +69,28 @@ var Galleries = can.Control({
 });
 
 $(function() {
-    new Galleries('#content', {});
+
+    // run
+    can.Control({
+        defaults: {
+            defaultRoute:    'galleries',
+            contentSelector: '#content'
+        }
+    }, {
+        init: function() {
+            can.route('galleries');
+            can.route.ready();
+        },
+
+        // show galleries
+        'galleries route': function() {
+            new Galleries(this.options.contentSelector, {});
+        },
+
+        // redirect to default route
+        'route': function() {
+            window.location.hash = '!' + this.options.defaultRoute;
+        }
+    })();
+
 });
