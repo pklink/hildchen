@@ -62,6 +62,26 @@ def delete_gallery(id):
     return jsonify({'id': id}), 200, {'Content-Type': 'text/json'}
 
 
+@app.route('/galleries/<id>', methods=['GET'])
+def get_gallery(id):
+    # create connection to db an cursor
+    conn = sqlite3.connect('hildchen.db')
+    curs = conn.cursor()
+
+    # get gallery in db
+    curs.execute('SELECT * FROM galleries WHERE id=:id', {'id': id})
+    gallery = curs.fetchone()
+
+    # close connection to db
+    conn.close()
+
+    return jsonify({
+        'id': gallery[0],
+        'title': gallery[1],
+        'visibility': gallery[2]
+    })
+
+
 @app.route('/galleries', methods=['POST'])
 def create_gallery():
     # get form data

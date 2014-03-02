@@ -21,7 +21,7 @@
     <section class="column">
         <div class="ui fluid four item pointing menu">
             <a class="item" id="do-upload"><i class="upload icon"></i> Upload</a>
-            <a class="item" href="/galleries"><i class="photo icon"></i> Galleries</a>
+            <a class="item" href="#!galleries"><i class="photo icon"></i> Galleries</a>
             <a class="item"><i class="help icon"></i> Help</a>
             <a class="item"><i class="off icon"></i> Logout</a>
         </div>
@@ -47,14 +47,44 @@
             </div>
 
             {{#models}}
-                <div class="item" {{ data 'model' }}>
-                    <a class="ui rounded image show-image">
+                <div class="item show gallery" {{ data 'model' }}>
+                    <a class="ui rounded image show-image" href="#!galleries/{{ id }}">
                         <img src="http://placekitten.com/g/200/200">
                     </a>
                 </div>
             {{/models}}
 
         </div>
+</script>
+
+<script type="text/mustache" id="gallery">
+    <h2 class="ui header">
+        {{ title }}
+    </h2>
+
+    <div class="ui mini icon labeled green button"><i class="upload icon"></i> Upload</div>
+    <div class="ui mini icon labeled blue button"><i class="pencil icon"></i> Edit</div>
+    <div class="ui mini icon labeled red button"><i class="remove icon"></i> Delete</div>
+
+    <div class="ui six items">
+
+        <div class="item show gallery" {{ data 'model' }}>
+            <a class="ui rounded image show-image" href="#!galleries/{{ id }}">
+                <img src="http://placekitten.com/g/200/200">
+            </a>
+        </div>
+        <div class="item show gallery" {{ data 'model' }}>
+            <a class="ui rounded image show-image" href="#!galleries/{{ id }}">
+                <img src="http://placekitten.com/g/200/200">
+            </a>
+        </div>
+        <div class="item show gallery" {{ data 'model' }}>
+            <a class="ui rounded image show-image" href="#!galleries/{{ id }}">
+                <img src="http://placekitten.com/g/200/200">
+            </a>
+        </div>
+
+    </div>
 </script>
 
 <script type="text/mustache" id="gallery-create-modal">
@@ -72,7 +102,7 @@
             <form class="ui form fluid">
 
                 <div class="field" id="name">
-                    <label>Name</label>
+                    <label>Title</label>
                     <div class="ui left labeled input">
                         <input type="text" name="title" placeholder="So Cute Kitten" required="required">
                         <div class="ui corner label">
